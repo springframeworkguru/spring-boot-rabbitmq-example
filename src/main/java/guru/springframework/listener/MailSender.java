@@ -34,7 +34,7 @@ public class MailSender {
         product.setMailsSent(true);
 
         log.info(
-          "Receiver is sleeping for 5 seconds to simulate mail sending process");
+          "Receiver is sleeping for 10 seconds to simulate mail sending process");
         try {
             Thread.currentThread().sleep(10000);
         } catch (InterruptedException e) {
