@@ -1,12 +1,10 @@
 package guru.springframework.controllers;
 
-import guru.springframework.SpringBootRabbitMQApplication;
 import guru.springframework.commands.ProductForm;
 import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
 import org.apache.log4j.Logger;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by jt on 1/10/17.
@@ -31,12 +27,11 @@ public class ProductController {
 
     private ProductToProductForm productToProductForm;
 
-    private RabbitTemplate rabbitTemplate;
+
 
     @Autowired
-    public void setProductToProductForm(ProductToProductForm productToProductForm, RabbitTemplate rabbitTemplate) {
+    public void setProductToProductForm(ProductToProductForm productToProductForm) {
         this.productToProductForm = productToProductForm;
-        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Autowired
@@ -96,10 +91,7 @@ public class ProductController {
 
     @RequestMapping("/product/indexProduct/{id}")
     public String indexProduct(@PathVariable String id){
-        Map<String, String> actionmap = new HashMap<>();
-        actionmap.put("id", id);
-        log.info("Sending the index request through queue message");
-        rabbitTemplate.convertAndSend(SpringBootRabbitMQApplication.SFG_MESSAGE_QUEUE, actionmap);
+        productService.sendProductMessage(id);
         return "redirect:/product/show/"+id;
     }
 }

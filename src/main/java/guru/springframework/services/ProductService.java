@@ -19,4 +19,6 @@ public interface ProductService {
     void delete(Long id);
 
     Product saveOrUpdateProductForm(ProductForm productForm);
+
+    void sendProductMessage(String id);
 }

@@ -35,6 +35,6 @@ public class ProductMessageListener {
         product.setMessageCount(product.getMessageCount() + 1);
 
         productRepository.save(product);
-        log.info("Sent all emails...");
+        log.info("Message processed...");
     }
 }
