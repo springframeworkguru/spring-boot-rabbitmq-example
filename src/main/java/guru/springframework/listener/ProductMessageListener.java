@@ -12,13 +12,13 @@ import java.util.Map;
  * message as the parameter.
  */
 @Component
-public class MessageListener {
+public class ProductMessageListener {
 
     private ProductRepository productRepository;
 
-    private static final Logger log = Logger.getLogger(MessageListener.class);
+    private static final Logger log = Logger.getLogger(ProductMessageListener.class);
 
-    public MessageListener(ProductRepository productRepository) {
+    public ProductMessageListener(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 

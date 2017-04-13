@@ -99,7 +99,7 @@ public class ProductController {
         Map<String, String> actionmap = new HashMap<>();
         actionmap.put("id", id);
         log.info("Sending the index request through queue message");
-        rabbitTemplate.convertAndSend(SpringBootRabbitMQApplication.MAIL_QUEUE, actionmap);
+        rabbitTemplate.convertAndSend(SpringBootRabbitMQApplication.SFG_MESSAGE_QUEUE, actionmap);
         return "redirect:/product/show/"+id;
     }
 }

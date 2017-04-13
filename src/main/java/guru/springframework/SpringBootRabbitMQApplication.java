@@ -1,6 +1,6 @@
 package guru.springframework;
 
-import guru.springframework.listener.MessageListener;
+import guru.springframework.listener.ProductMessageListener;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -15,11 +15,11 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SpringBootRabbitMQApplication {
 
-	public final static String MAIL_QUEUE = "sfg-message-queue";
+	public final static String SFG_MESSAGE_QUEUE = "sfg-message-queue";
 
 	@Bean
 	Queue queue() {
-		return new Queue(MAIL_QUEUE, false);
+		return new Queue(SFG_MESSAGE_QUEUE, false);
 	}
 
 	@Bean
@@ -29,7 +29,7 @@ public class SpringBootRabbitMQApplication {
 
 	@Bean
 	Binding binding(Queue queue, TopicExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(MAIL_QUEUE);
+		return BindingBuilder.bind(queue).to(exchange).with(SFG_MESSAGE_QUEUE);
 	}
 
 	@Bean
@@ -37,13 +37,13 @@ public class SpringBootRabbitMQApplication {
 	MessageListenerAdapter listenerAdapter) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
 		container.setConnectionFactory(connectionFactory);
-		container.setQueueNames(MAIL_QUEUE);
+		container.setQueueNames(SFG_MESSAGE_QUEUE);
 		container.setMessageListener(listenerAdapter);
 		return container;
 	}
 
 	@Bean
-	MessageListenerAdapter listenerAdapter(MessageListener receiver) {
+	MessageListenerAdapter listenerAdapter(ProductMessageListener receiver) {
 		return new MessageListenerAdapter(receiver, "receiveMessage");
 	}
 
