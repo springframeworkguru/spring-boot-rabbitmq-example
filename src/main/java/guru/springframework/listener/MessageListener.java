@@ -12,13 +12,13 @@ import java.util.Map;
  * message as the parameter.
  */
 @Component
-public class MailSender {
+public class MessageListener {
 
     private ProductRepository productRepository;
 
-    private static final Logger log = Logger.getLogger(MailSender.class);
+    private static final Logger log = Logger.getLogger(MessageListener.class);
 
-    public MailSender(ProductRepository productRepository) {
+    public MessageListener(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
@@ -31,15 +31,9 @@ public class MailSender {
         log.info("Received <" + message + ">");
         Long id = Long.valueOf(message.get("id"));
         Product product = productRepository.findOne(id);
-        product.setMailsSent(true);
+        product.setMessageReceived(true);
+        product.setMessageCount(product.getMessageCount() + 1);
 
-        log.info(
-          "Receiver is sleeping for 10 seconds to simulate mail sending process");
-        try {
-            Thread.currentThread().sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         productRepository.save(product);
         log.info("Sent all emails...");
     }

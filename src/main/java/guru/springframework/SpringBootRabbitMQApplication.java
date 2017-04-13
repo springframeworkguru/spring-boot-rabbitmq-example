@@ -1,6 +1,6 @@
 package guru.springframework;
 
-import guru.springframework.listener.MailSender;
+import guru.springframework.listener.MessageListener;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class SpringBootRabbitMQApplication {
 
-	public final static String MAIL_QUEUE = "our-mail-queue";
+	public final static String MAIL_QUEUE = "sfg-message-queue";
 
 	@Bean
 	Queue queue() {
@@ -43,7 +43,7 @@ public class SpringBootRabbitMQApplication {
 	}
 
 	@Bean
-	MessageListenerAdapter listenerAdapter(MailSender receiver) {
+	MessageListenerAdapter listenerAdapter(MessageListener receiver) {
 		return new MessageListenerAdapter(receiver, "receiveMessage");
 	}
 
