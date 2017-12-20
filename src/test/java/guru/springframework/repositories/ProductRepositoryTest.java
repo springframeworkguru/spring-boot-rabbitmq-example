@@ -40,7 +40,7 @@ public class ProductRepositoryTest {
 
         //then
         Assert.assertNotNull(product.getId());
-        Product newProduct = productRepository.findOne(product.getId());
+        Product newProduct = productRepository.findById(product.getId()).orElse(null);
         Assert.assertEquals((Long) 1L, newProduct.getId());
         Assert.assertEquals(PRODUCT_DESCRIPTION, newProduct.getDescription());
         Assert.assertEquals(BIG_DECIMAL_100.compareTo(newProduct.getPrice()), 0);

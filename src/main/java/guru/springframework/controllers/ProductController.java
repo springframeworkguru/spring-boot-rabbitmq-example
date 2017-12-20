@@ -4,7 +4,8 @@ import guru.springframework.commands.ProductForm;
 import guru.springframework.converters.ProductToProductForm;
 import guru.springframework.domain.Product;
 import guru.springframework.services.ProductService;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,7 @@ import javax.validation.Valid;
 @Controller
 public class ProductController {
 
-    private static final Logger log = Logger.getLogger(ProductController.class);
+    private static final Logger log = LogManager.getLogger(ProductController.class);
 
     private ProductService productService;
 
